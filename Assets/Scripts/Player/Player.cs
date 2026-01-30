@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -8,18 +10,39 @@ public class Player : MonoBehaviour
     PlayerInput input;
     new  Rigidbody2D rigidbody2D;
     [SerializeField] private float moveSpeed = 10f;
-    
-    [Header("Parry")]
+
+    [Header("SanValue")] 
+    public float maxSanValue = 100f;
+
+    public float currentSanValue;
+
+    [Header("Parry")] 
     [SerializeField] private GameObject parryArea;
     [SerializeField] private float parryTime = 1f;
     [SerializeField] private float parryDamage;
     private WaitForSeconds parryWait;
+    public event Action OnParrySuccess;
     
 
     [Header("UseMask")] 
+    private bool _useMask = false;
+    public event Action<bool> OnUseMaskChanged;  
+    public bool blUseMask
+    {
+        get => _useMask;
+        set
+        {
+            if(_useMask == value) return;
+            
+            _useMask = value;
+            OnUseMaskChanged?.Invoke(_useMask);
+        }
+    }
+    
     [SerializeField] private float invincibleTime = 1f;
     [SerializeField] private GameObject slashArea;
     [SerializeField] private float velocityIncreaseValue;
+    [SerializeField] private float sanCost;//san值消耗
     private WaitForSeconds invincibleWait;
     
     private void OnEnable()
@@ -59,6 +82,12 @@ public class Player : MonoBehaviour
         yield return parryWait;
         parryArea.SetActive(false);
     }
+
+    public void HandelParrySuccess()//TODO:弹反成功，此函数未被调用
+    {
+        OnParrySuccess?.Invoke();
+    }
+    
     void UseMask()
     {
         StartCoroutine(UseMaskCoroutine());
@@ -66,13 +95,16 @@ public class Player : MonoBehaviour
 
     IEnumerator UseMaskCoroutine()
     {
+        _useMask = true;
         slashArea.SetActive(true);
         yield return invincibleWait;
         slashArea.SetActive(false);
+        _useMask = false;
     }
 
     private void Awake()
     {
+        currentSanValue = maxSanValue;//初始化san值
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
