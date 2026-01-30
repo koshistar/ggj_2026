@@ -147,6 +147,17 @@
                 },
                 {
                     "name": "",
+                    "id": "9f996b5c-34f1-4e67-84cd-dbe3f76e5177",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "30d17d41-2bc9-4096-8e5f-0ae00abf8d86",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -158,8 +169,30 @@
                 },
                 {
                     "name": "",
+                    "id": "92f71741-9d66-42f7-9368-b2ca6a912292",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Parry",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "bec0ad5a-8181-4b1c-92af-655b0c8adf1c",
                     "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseMask",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "110a701d-9cad-4f27-bfde-097552c29ff4",
+                    "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
