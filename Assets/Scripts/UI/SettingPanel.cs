@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using SKCell;
 using UnityEngine;
 
-public class GameManager : SKMonoSingleton<GameManager>
+public class SettingPanel : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
