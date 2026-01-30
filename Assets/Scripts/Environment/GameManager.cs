@@ -14,7 +14,7 @@ public class GameManager : PersistentSingleton<GameManager>
     [SerializeField]private float _lowSanValue;
     public Camera mainCamera;  // TODO:修改主相机!!
     [Header("EscapeTime")]
-    [SerializeField] private float escapeTime = 30f;
+    public float escapeTime = 240f;
     
     private Coroutine _escapeCoroutine;
     private bool _isEscaping;

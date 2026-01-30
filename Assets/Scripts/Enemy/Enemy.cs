@@ -22,6 +22,10 @@ public class Enemy : MonoBehaviour
     /// </summary>
     protected float moveSpeed = 6f;
     /// <summary>
+    /// 攻击力
+    /// </summary>
+    private float attackValue = 25f;//攻击值
+    /// <summary>
     /// 攻击距离
     /// </summary>
     protected float meleeAttackDistance = 1f;//近战

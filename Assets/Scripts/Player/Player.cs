@@ -15,7 +15,9 @@ public class Player : MonoBehaviour
     public float maxSanValue = 100f;
 
     public float currentSanValue;
-
+    [SerializeField] private float sanCost = 60f;//san值消耗
+    [SerializeField] private float recoverSan = 10f;//san值恢复/弹反
+    
     [Header("Parry")] 
     [SerializeField] private GameObject parryArea;
     [SerializeField] private float parryTime = 1f;
@@ -42,7 +44,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float invincibleTime = 1f;
     [SerializeField] private GameObject slashArea;
     [SerializeField] private float velocityIncreaseValue;
-    [SerializeField] private float sanCost;//san值消耗
+    
     private WaitForSeconds invincibleWait;
     
     private void OnEnable()
