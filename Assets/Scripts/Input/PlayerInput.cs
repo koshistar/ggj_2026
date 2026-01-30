@@ -1,0 +1,63 @@
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
+
+[CreateAssetMenu(menuName = "Player Input")]
+public class PlayerInput : ScriptableObject, InputSystem.IGamePlayActions
+{
+    public event UnityAction<Vector2> onMove = delegate { };
+    public event UnityAction onStopMove = delegate { };
+    public event UnityAction onParry = delegate { };
+    public event UnityAction onUseMask = delegate { };
+    private InputSystem inputSystem;
+
+    private void OnEnable()
+    {
+        inputSystem = new InputSystem();
+        inputSystem.GamePlay.SetCallbacks(this);
+    }
+
+    private void OnDisable()
+    {
+        DisableAllInputs();
+    }
+
+    public void DisableAllInputs()
+    {
+        inputSystem.GamePlay.Disable();
+    }
+
+    public void EnableGameplayInput()
+    {
+        inputSystem.GamePlay.Enable();
+        // Is Cursor?
+    }
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            onMove.Invoke(context.ReadValue<Vector2>());
+        }
+
+        if (context.phase == InputActionPhase.Canceled)
+        {
+            onStopMove.Invoke();
+        }
+    }
+
+    public void OnParry(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            onParry.Invoke();
+        }
+    }
+
+    public void OnUseMask(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            onUseMask.Invoke();
+        }
+    }
+}
