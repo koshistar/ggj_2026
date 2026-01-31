@@ -29,7 +29,9 @@ public class Player : SKMonoSingleton<Player>
 
     [Header("UseMask")] 
     private bool _useMask = false;
-    public event Action<bool> OnUseMaskChanged;  
+    public event Action<bool> OnUseMaskChanged;
+
+    private Animator anim;
     public bool blUseMask
     {
         get => _useMask;
@@ -66,6 +68,14 @@ public class Player : SKMonoSingleton<Player>
 
     void Move(Vector2 moveInput)
     {
+        if (moveInput.x < 0)
+        {
+            anim.SetBool("isLeft", true);
+        }
+        else
+        {
+            anim.SetBool("isLeft", false);
+        }
         rigidbody2D.velocity = moveInput * moveSpeed;
     }
 
@@ -118,6 +128,7 @@ public class Player : SKMonoSingleton<Player>
         rigidbody2D.gravityScale = 0f;
         parryWait = new WaitForSeconds(parryTime);
         invincibleWait = new WaitForSeconds(invincibleTime);
+        anim = GetComponent<Animator>();
         input.EnableGameplayInput();
     }
 
