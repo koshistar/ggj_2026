@@ -5,7 +5,7 @@ using System.Text;
 using SKCell;
 using UnityEngine;
 
-public class GameManager : PersistentSingleton<GameManager>
+public class GameManager : Singleton<GameManager>
 {
     public static bool end1 = false;
     public static bool end2 = false;

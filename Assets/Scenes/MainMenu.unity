@@ -5625,6 +5625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 783163133}
   sfxSource: {fileID: 1840656301}
+  music: []
 --- !u!1 &1188940594
 GameObject:
   m_ObjectHideFlags: 0
