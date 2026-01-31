@@ -41,6 +41,7 @@ public class MainPenel : MonoBehaviour
     {
         Time.timeScale = 0;
         pausePanel.SetActive(true);
+        Player.instance.changeUIMap();
         UIManager.Instance.SetPanel(pausePanel);
     }
 

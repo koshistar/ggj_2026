@@ -9,7 +9,6 @@ public class PausePanel : SKMonoSingleton<PausePanel>
     [Header("Buttons")] [SerializeField] private SKButton ContinueButton;
     [SerializeField] private SKButton RetryButton;
     [SerializeField] private SKButton ExitButton;
-    [SerializeField] private SKButton backButton;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +26,7 @@ public class PausePanel : SKMonoSingleton<PausePanel>
 
     private void OnDisable()
     {
+        Player.instance.ChangeGamePlayMap();
         UIManager.Instance.SetPanel(null);
     }
 
