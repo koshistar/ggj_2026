@@ -32,6 +32,11 @@ public class MainPenel : MonoBehaviour
         {
             overPanel.SetActive(true);
         }
+        sanValue.SetValue(Player.instance.GetCurrentSanValue());
+        if (sanValue.value <= 0)
+        {
+            overPanel.SetActive(true);
+        }
     }
 
     #region ButtonEvent

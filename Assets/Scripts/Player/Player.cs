@@ -31,6 +31,7 @@ public class Player : SKMonoSingleton<Player>
     private bool _useMask = false;
     public event Action<bool> OnUseMaskChanged;
 
+    // [SerializeField] private GameObject UIRoot;
     private Animator anim;
     public bool blUseMask
     {
@@ -130,10 +131,8 @@ public class Player : SKMonoSingleton<Player>
     void Start()
     {
         rigidbody2D.gravityScale = 0f;
-        parryWait = new WaitForSeconds(parryTime);
-        invincibleWait = new WaitForSeconds(invincibleTime);
         anim = GetComponent<Animator>();
-        input.EnableGameplayInput();
+        StartCoroutine(GameStartCoroutine());
     }
 
     // Update is called once per frame
@@ -142,7 +141,28 @@ public class Player : SKMonoSingleton<Player>
         
     }
 
+    IEnumerator GameStartCoroutine()
+    {
+        while (transform.position.x < 0)
+        {
+            Move(Vector2.right);
+            yield return null;
+        }
+        StopMove();
+        Init();
+    }
+    void Init()
+    {
+        parryWait = new WaitForSeconds(parryTime);
+        invincibleWait = new WaitForSeconds(invincibleTime);
+        Camera.main.gameObject.transform.SetParent(transform);
+        input.EnableGameplayInput();
+        // UIRoot.SetActive(true);
+    }
+    
+    public float GetCurrentSanValue() => currentSanValue;
     public void changeUIMap() => input.EnableUIInput();
 
     public void ChangeGamePlayMap() => input.EnableGameplayInput();
+    public void DisableAllInput() => input.DisableAllInputs();
 }

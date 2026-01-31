@@ -41,6 +41,7 @@ public class PausePanel : SKMonoSingleton<PausePanel>
     void Retry()
     {
         gameObject.SetActive(false);
+        Player.instance.DisableAllInput();
         SceneLoader.Instance.Load("SampleScene");
     }
 

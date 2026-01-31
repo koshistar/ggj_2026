@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using SKCell;
@@ -8,6 +9,17 @@ public class OverPanel : MonoBehaviour
     [Header("Buttons")] 
     [SerializeField] private SKButton backButton;
     [SerializeField] private SKButton retryButton;
+
+    private void OnEnable()
+    {
+        Time.timeScale = 0;
+    }
+
+    private void OnDisable()
+    {
+        Time.timeScale = 1;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
