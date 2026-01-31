@@ -18,6 +18,8 @@ public class SceneLoader : PersistentSingleton<SceneLoader>
     void Start()
     {
         DontDestroyOnLoad(transitionCanvas);
+        transitionCanvas.SetActive(false);
+        transitionImage.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -28,7 +30,13 @@ public class SceneLoader : PersistentSingleton<SceneLoader>
 
     public void Load(int sceneNum)
     {
-        StartCoroutine(LoadCoroutine(sceneNum));
+        if (loadCoroutine != null)
+        {
+            StopCoroutine(loadCoroutine);
+        }
+
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); 
+        loadCoroutine = StartCoroutine(LoadCoroutine(sceneNum));
     }
 
     public void Load(string sceneName)
@@ -44,26 +52,41 @@ public class SceneLoader : PersistentSingleton<SceneLoader>
 
     IEnumerator LoadCoroutine(string sceneName)
     {
-        var loadingOperation = SceneManager.LoadSceneAsync(sceneName);
+        // 1. 准备工作
+        transitionCanvas.SetActive(true);
+        transitionImage.gameObject.SetActive(true);
+    
+        // 初始化透明度（防止之前残留的 alpha 值影响）
+        Color c = transitionImage.color;
+        transitionImage.color = new Color(c.r, c.g, c.b, 0f);
+
+        // 2. 执行淡入动画
+        // 使用 .SetUpdate(true) 确保即使游戏暂停也能播放动画
+        yield return transitionImage.DOFade(1.0f, fadeTime).SetUpdate(true).WaitForCompletion();
+    
+        // 3. 开始异步加载
+        AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(sceneName);
         loadingOperation.allowSceneActivation = false;
 
-        transitionCanvas.SetActive(true);
-
-        transitionImage.gameObject.SetActive(true);
-        transitionImage.DOFade(1.0f, 1.0f);
+        // 4. 等待加载完成 (0.9f 表示场景已准备就绪)
         while (loadingOperation.progress < 0.9f)
+        {
             yield return null;
-        yield return new WaitForSeconds(1.0f);
-        //
-        transitionImage.DOFade(0f, 1.0f);
-        
-        //Debug.Log("Load");
+        }
+
+        // 5. 激活场景
         loadingOperation.allowSceneActivation = true;
-        yield return new WaitForSeconds(1f);
 
+        // 必须等待一帧，确保新场景已经初始化，否则旧场景的组件可能会干扰后续操作
+        yield return null; 
+
+        // 6. 执行淡出动画
+        yield return transitionImage.DOFade(0f, fadeTime).SetUpdate(true).WaitForCompletion();
+
+        // 7. 清理
         transitionImage.gameObject.SetActive(false);
-
         transitionCanvas.SetActive(false);
+        loadCoroutine = null;
     }
 
     IEnumerator LoadCoroutine(int sceneNum)

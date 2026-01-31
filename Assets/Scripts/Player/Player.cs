@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
+using SKCell;
 using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : MonoBehaviour
+public class Player : SKMonoSingleton<Player>
 {
     [SerializeField]
     PlayerInput input;
@@ -104,8 +105,9 @@ public class Player : MonoBehaviour
         _useMask = false;
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         currentSanValue = maxSanValue;//初始化san值
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
@@ -124,4 +126,8 @@ public class Player : MonoBehaviour
     {
         
     }
+
+    public void changeUIMap() => input.EnableUIInput();
+
+    public void ChangeGamePlayMap() => input.EnableGameplayInput();
 }
