@@ -25,12 +25,20 @@ public class PlayerInput : ScriptableObject, InputSystem.IGamePlayActions
     public void DisableAllInputs()
     {
         inputSystem.GamePlay.Disable();
+        inputSystem.UI.Disable();
     }
 
     public void EnableGameplayInput()
     {
+        inputSystem.UI.Disable();
         inputSystem.GamePlay.Enable();
         // Is Cursor?
+    }
+
+    public void EnableUIInput()
+    {
+        inputSystem.GamePlay.Disable();
+        inputSystem.UI.Enable();
     }
     public void OnMove(InputAction.CallbackContext context)
     {

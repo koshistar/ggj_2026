@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using SKCell;
@@ -25,6 +26,7 @@ public class EndGalleryPanel : SKMonoSingleton<EndGalleryPanel>
     [SerializeField] private GameObject end1Way;
     [SerializeField] private GameObject end2Way;
     [SerializeField] private GameObject end3Way;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +45,11 @@ public class EndGalleryPanel : SKMonoSingleton<EndGalleryPanel>
         
     }
 
+    private void OnDisable()
+    {
+        UIManager.Instance.SetPanel(null);
+    }
+
     #region ButtonEvents
     // TODO: 弹出动画
     void OpenEnd1()
@@ -50,10 +57,12 @@ public class EndGalleryPanel : SKMonoSingleton<EndGalleryPanel>
         if (GameManager.end1)
         {
             end1Gallery.SetActive(true);
+            UIManager.Instance.SetPanel(end1Gallery);
         }
         else
         {
             end1Way.SetActive(true);
+            UIManager.Instance.SetPanel(end1Way);
         }
     }
 
@@ -62,10 +71,12 @@ public class EndGalleryPanel : SKMonoSingleton<EndGalleryPanel>
         if (GameManager.end2)
         {
             end2Gallery.SetActive(true);
+            UIManager.Instance.SetPanel(end2Gallery);
         }
         else
         {
             end2Way.SetActive(true);
+            UIManager.Instance.SetPanel(end2Way);
         }
     }
 
@@ -74,10 +85,12 @@ public class EndGalleryPanel : SKMonoSingleton<EndGalleryPanel>
         if (GameManager.end3)
         {
             end3Gallery.SetActive(true);
+            UIManager.Instance.SetPanel(end3Gallery);
         }
         else
         {
             end3Way.SetActive(true);
+            UIManager.Instance.SetPanel(end3Way);
         }
     }
 
@@ -85,6 +98,7 @@ public class EndGalleryPanel : SKMonoSingleton<EndGalleryPanel>
     {
         // SKAudioManager.instance.PlaySound();
         this.gameObject.SetActive(false);
+        UIManager.Instance.SetPanel(null);
     }
     #endregion
 }

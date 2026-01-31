@@ -37,18 +37,21 @@ public class StartMenu : SKMonoSingleton<StartMenu>
     {
         // SKAudioManager.instance.PlaySound();
         endGalleryPanel.SetActive(true);
+        UIManager.Instance.SetPanel(endGalleryPanel);
     }
 
     void Setting()
     {
         // SKAudioManager.instance.PlaySound();
         settingPanel.SetActive(true);
+        UIManager.Instance.SetPanel(settingPanel);
     }
 
     void About()
     {
         // SKAudioManager.instance.PlaySound();
         aboutPanel.SetActive(true);
+        UIManager.Instance.SetPanel(aboutPanel);
     }
     void Quit()
     {

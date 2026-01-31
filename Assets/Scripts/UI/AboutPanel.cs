@@ -17,5 +17,6 @@ public class AboutPanel : SKMonoSingleton<AboutPanel>
     {
         // SKAudioManager.instance.PlaySound();
         this.gameObject.SetActive(false);
+        UIManager.Instance.SetPanel(null);
     }
 }

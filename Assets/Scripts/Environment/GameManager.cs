@@ -14,9 +14,5 @@ public class GameManager : PersistentSingleton<GameManager>
     {
         
     }
-
-    public void ShowUI(GameObject panel)
-    {
-        
-    }
+    
 }

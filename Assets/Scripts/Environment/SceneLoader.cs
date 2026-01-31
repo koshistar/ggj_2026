@@ -50,18 +50,16 @@ public class SceneLoader : PersistentSingleton<SceneLoader>
         transitionCanvas.SetActive(true);
 
         transitionImage.gameObject.SetActive(true);
-        transitionImage.color =
-            new Color(transitionImage.color.r, transitionImage.color.g, transitionImage.color.b, 1.0f);
+        transitionImage.DOFade(1.0f, 1.0f);
         while (loadingOperation.progress < 0.9f)
             yield return null;
         yield return new WaitForSeconds(1.0f);
         //
         transitionImage.DOFade(0f, 1.0f);
-
-        yield return new WaitForSeconds(1f);
-
+        
         //Debug.Log("Load");
         loadingOperation.allowSceneActivation = true;
+        yield return new WaitForSeconds(1f);
 
         transitionImage.gameObject.SetActive(false);
 
@@ -76,8 +74,10 @@ public class SceneLoader : PersistentSingleton<SceneLoader>
         transitionCanvas.SetActive(true);
 
         transitionImage.gameObject.SetActive(true);
-        transitionImage.color =
-            new Color(transitionImage.color.r, transitionImage.color.g, transitionImage.color.b, 1.0f);
+        // transitionImage.color =
+        //     new Color(transitionImage.color.r, transitionImage.color.g, transitionImage.color.b, 1.0f);
+        transitionImage.DOFade(1.0f, 1.0f);
+        
 
         Debug.Log(loadingOperation.progress);
         while (loadingOperation.progress < 0.9f)
@@ -85,11 +85,10 @@ public class SceneLoader : PersistentSingleton<SceneLoader>
         yield return new WaitForSeconds(1.0f);
 
         transitionImage.DOFade(0f, 1.0f);
-
-        yield return new WaitForSeconds(1f);
-
+        
         Debug.Log("Load");
         loadingOperation.allowSceneActivation = true;
+        yield return new WaitForSeconds(1f);
 
         transitionImage.gameObject.SetActive(false);
 
