@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using SKCell;
-using UnityEngine;
-
-public class MainPenel : MonoBehaviour
-{
-    [Header("UI Elements")]
-    [SerializeField] private SKButton pauseButton;
-    [SerializeField] private SKText countdownText;
-    [SerializeField] private SKImage mask;
+using System.Collections; 
+using System.Collections.Generic; 
+using SKCell; using UnityEngine; 
+public class MainPenel : MonoBehaviour 
+{ 
+    [Header("UI Elements")] 
+    [SerializeField] private SKButton pauseButton; 
+    [SerializeField] private SKText countdownText; 
+    [SerializeField] private SKImage mask; 
     [SerializeField] private SKSlider sanValue;
     
     [Header("Panel")]
@@ -25,7 +23,7 @@ public class MainPenel : MonoBehaviour
     {
         if ( GameManager.Instance.escapeTime > 0f)
         {
-            GameManager.Instance.escapeTime -= Time.deltaTime;
+            //GameManager.Instance.escapeTime -= Time.deltaTime;
             countdownText.SetText(GameManager.Instance.escapeTime.ToString());
         }
         else

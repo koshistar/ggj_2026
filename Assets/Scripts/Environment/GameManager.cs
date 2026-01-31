@@ -11,10 +11,14 @@ public class GameManager : Singleton<GameManager>
     public static bool end2 = false;
     public static bool end3 = false;
     [SerializeField]private Player player;
+    [SerializeField]private EnemySpawner enemySpawner;
     [SerializeField]private float _lowSanValue;
     public Camera mainCamera;  // TODO:修改主相机!!
+    
     [Header("EscapeTime")]
-    public float escapeTime = 240f;
+    public int escapeTime = 240;
+    [SerializeField]
+    private float timer = 0f;
     
     private Coroutine _escapeCoroutine;
     private bool _isEscaping;
@@ -33,12 +37,18 @@ public class GameManager : Singleton<GameManager>
         player.OnParrySuccess -= OnPlayerParrySuccess;
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         player = FindObjectOfType<Player>();
         _lowSanValue = player.maxSanValue * 0.2f;
     }
     
+    private void Update()
+    {
+        StartEscapeCountdown();
+        //enemySpawner.SpawnEnemy();
+    }
     /// <summary>
     /// 低san状态检测
     /// </summary>
@@ -101,14 +111,20 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator EscapeCountdown()
     {
-        float remainingTime = escapeTime;
+        //float remainingTime = escapeTime;
 
-        while (remainingTime > 0f)
+        while (escapeTime > 0f)
         {
             // 发事件 / 更新 UI
 
             yield return null;
-            remainingTime -= Time.deltaTime;
+            timer += Time.deltaTime;
+
+            if (timer >= 1f)
+            {
+                escapeTime -= 1;
+                timer -= 1f;   // 关键：防止丢帧
+            }
         }
 
         OnEscapeFailed();
