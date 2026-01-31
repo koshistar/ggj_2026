@@ -71,9 +71,11 @@ public class Player : SKMonoSingleton<Player>
         if (moveInput.x < 0)
         {
             anim.SetBool("isLeft", true);
+            anim.SetBool("isRight", false);
         }
         else
         {
+            anim.SetBool("isRight", true);
             anim.SetBool("isLeft", false);
         }
         rigidbody2D.velocity = moveInput * moveSpeed;
@@ -81,6 +83,8 @@ public class Player : SKMonoSingleton<Player>
 
     void StopMove()
     {
+        anim.SetBool("isLeft", false);
+        anim.SetBool("isRight", false);
         rigidbody2D.velocity = Vector2.zero;
     }
 
