@@ -118,6 +118,15 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""48c2d7ed-0c03-44d1-95b8-ad0d1ef388db"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -285,6 +294,17 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""UseMask"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8c3d050-8f42-4a3d-b8bb-2d5b52642705"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -324,6 +344,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_GamePlay_Move = m_GamePlay.FindAction("Move", throwIfNotFound: true);
         m_GamePlay_Parry = m_GamePlay.FindAction("Parry", throwIfNotFound: true);
         m_GamePlay_UseMask = m_GamePlay.FindAction("UseMask", throwIfNotFound: true);
+        m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Close = m_UI.FindAction("Close", throwIfNotFound: true);
@@ -411,6 +432,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_Move;
     private readonly InputAction m_GamePlay_Parry;
     private readonly InputAction m_GamePlay_UseMask;
+    private readonly InputAction m_GamePlay_Pause;
     /// <summary>
     /// Provides access to input actions defined in input action map "GamePlay".
     /// </summary>
@@ -434,6 +456,10 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "GamePlay/UseMask".
         /// </summary>
         public InputAction @UseMask => m_Wrapper.m_GamePlay_UseMask;
+        /// <summary>
+        /// Provides access to the underlying input action "GamePlay/Pause".
+        /// </summary>
+        public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -469,6 +495,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @UseMask.started += instance.OnUseMask;
             @UseMask.performed += instance.OnUseMask;
             @UseMask.canceled += instance.OnUseMask;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         /// <summary>
@@ -489,6 +518,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @UseMask.started -= instance.OnUseMask;
             @UseMask.performed -= instance.OnUseMask;
             @UseMask.canceled -= instance.OnUseMask;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         /// <summary>
@@ -646,6 +678,13 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnUseMask(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPause(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

@@ -9,6 +9,7 @@ public class PlayerInput : ScriptableObject, InputSystem.IGamePlayActions
     public event UnityAction onStopMove = delegate { };
     public event UnityAction onParry = delegate { };
     public event UnityAction onUseMask = delegate { };
+    public event UnityAction onPause = delegate { };
     private InputSystem inputSystem;
 
     private void OnEnable()
@@ -66,6 +67,14 @@ public class PlayerInput : ScriptableObject, InputSystem.IGamePlayActions
         if (context.phase == InputActionPhase.Performed)
         {
             onUseMask.Invoke();
+        }
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            onPause.Invoke();
         }
     }
 }

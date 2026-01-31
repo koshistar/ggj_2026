@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using SKCell;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : SKMonoSingleton<Player>
@@ -25,12 +27,17 @@ public class Player : SKMonoSingleton<Player>
     [SerializeField] private float parryDamage;
     private WaitForSeconds parryWait;
     public event Action OnParrySuccess;
-    
 
-    [Header("UseMask")] 
+
+    [Header("UseMask")] private bool canuseMask = true;
     private bool _useMask = false;
-    public event Action<bool> OnUseMaskChanged;
+    
+    [Header("Filter")]
+    [SerializeField] private GameObject filterPanel;
+    [SerializeField] private Vector3 bigSizeFilter = new Vector3(20f, 20f, 20f);
+    [SerializeField] private float fadeTime = 2f;
 
+    [Header("Pause")] [SerializeField] private GameObject pausePanel;
     // [SerializeField] private GameObject UIRoot;
     private Animator anim;
     public bool blUseMask
@@ -41,7 +48,6 @@ public class Player : SKMonoSingleton<Player>
             if(_useMask == value) return;
             
             _useMask = value;
-            OnUseMaskChanged?.Invoke(_useMask);
         }
     }
     
@@ -57,6 +63,7 @@ public class Player : SKMonoSingleton<Player>
         input.onStopMove += StopMove;
         input.onParry += Parry;
         input.onUseMask += UseMask;
+        input.onPause += Pause;
     }
 
     private void OnDisable()
@@ -65,6 +72,7 @@ public class Player : SKMonoSingleton<Player>
         input.onStopMove -= StopMove;
         input.onParry -= Parry;
         input.onUseMask -= UseMask;
+        input.onPause -= Pause;
     }
 
     void Move(Vector2 moveInput)
@@ -105,21 +113,51 @@ public class Player : SKMonoSingleton<Player>
     {
         OnParrySuccess?.Invoke();
     }
-    
+
     void UseMask()
     {
-        StartCoroutine(UseMaskCoroutine());
+        if (canuseMask && _useMask) 
+        { 
+            StartCoroutine(UnuseMaskCoroutine());
+        }
+        else if(currentSanValue > sanCost && canuseMask && !_useMask) 
+            StartCoroutine(UseMaskCoroutine());
     }
 
     IEnumerator UseMaskCoroutine()
     {
+        canuseMask = false;
+        // slashArea.SetActive(true);
+        filterPanel.SetActive(true);
+        currentSanValue -= sanCost;
+        var waitForFade = filterPanel.transform.DOScale(Vector3.one, fadeTime);
+        filterPanel.GetComponent<Image>().DOFade(1f, fadeTime);
+        yield return waitForFade;
+        // yield return invincibleWait;
+        // slashArea.SetActive(false);
         _useMask = true;
-        slashArea.SetActive(true);
-        yield return invincibleWait;
-        slashArea.SetActive(false);
+        canuseMask = true;
+    }
+    IEnumerator UnuseMaskCoroutine()
+    {
+        canuseMask = false;
+        var waitForFade = filterPanel.transform.DOScale(bigSizeFilter, fadeTime);
+        filterPanel.GetComponent<Image>().DOFade(0f, fadeTime);
+        yield return new WaitForSeconds(fadeTime);
+        filterPanel.SetActive(false);
         _useMask = false;
+        canuseMask = true;
     }
 
+    public bool CheckSanCanUseMask() => currentSanValue > sanCost;
+    
+    void Pause()
+    {
+        pausePanel.SetActive(true);
+        Time.timeScale = 0f;
+        input.EnableUIInput();
+        UIManager.Instance.SetPanel(pausePanel);
+    }
     protected override void Awake()
     {
         base.Awake();

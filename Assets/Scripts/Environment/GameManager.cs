@@ -28,12 +28,10 @@ public class GameManager : Singleton<GameManager>
 
     private void OnEnable()
     {
-        player.OnUseMaskChanged += HandelUseMaskChanged;//订阅玩家使用面具事件
         player.OnParrySuccess += OnPlayerParrySuccess;
     }
     private void OnDisable()
     {
-        player.OnUseMaskChanged -= HandelUseMaskChanged;//取消玩家使用面具事件
         player.OnParrySuccess -= OnPlayerParrySuccess;
     }
 
@@ -78,16 +76,16 @@ public class GameManager : Singleton<GameManager>
         }
     }
     
-    private void HandelUseMaskChanged(bool usemask)
-    {
-        if (usemask)
-        {
-          //视野遮挡
-          //变红
-          //面具ui变化  
-        }
-        
-    }
+    // private void HandelUseMaskChanged(bool usemask)
+    // {
+    //     if (usemask)
+    //     {
+    //       //视野遮挡
+    //       //变红
+    //       //面具ui变化  
+    //     }
+    //     
+    // }
     
     #region Escape
     //开始逃离倒计时

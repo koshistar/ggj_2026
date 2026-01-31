@@ -8,15 +8,21 @@ public class AboutPanel : SKMonoSingleton<AboutPanel>
 {
     [SerializeField] private SKButton backButton;
 
+    [SerializeField] GameObject maskPanel;
     private void Start()
     {
         backButton.AddListener(SKButtonEventType.OnPressed, Back);
+    }
+
+    private void OnDisable()
+    {
+        maskPanel.SetActive(false);
+        UIManager.Instance.SetPanel(null);
     }
 
     void Back()
     {
         // SKAudioManager.instance.PlaySound();
         this.gameObject.SetActive(false);
-        UIManager.Instance.SetPanel(null);
     }
 }

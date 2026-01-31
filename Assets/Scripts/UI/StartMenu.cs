@@ -14,6 +14,7 @@ public class StartMenu : SKMonoSingleton<StartMenu>
     [Header("Panels")] [SerializeField] private GameObject endGalleryPanel;
     [SerializeField] private GameObject settingPanel;
     [SerializeField] private GameObject aboutPanel;
+    [SerializeField] private GameObject maskPanel;
     
     // Start is called before the first frame update
     void Start()
@@ -43,6 +44,7 @@ public class StartMenu : SKMonoSingleton<StartMenu>
     void Setting()
     {
         // SKAudioManager.instance.PlaySound();
+        maskPanel.SetActive(true);
         settingPanel.SetActive(true);
         UIManager.Instance.SetPanel(settingPanel);
     }
@@ -50,6 +52,7 @@ public class StartMenu : SKMonoSingleton<StartMenu>
     void About()
     {
         // SKAudioManager.instance.PlaySound();
+        maskPanel.SetActive(true);
         aboutPanel.SetActive(true);
         UIManager.Instance.SetPanel(aboutPanel);
     }

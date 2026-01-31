@@ -225,11 +225,15 @@ MonoBehaviour:
   moveSpeed: 10
   maxSanValue: 100
   currentSanValue: 0
-  sanCost: 0
+  sanCost: 60
   recoverSan: 10
   parryArea: {fileID: 0}
   parryTime: 1
   parryDamage: 0
+  filterPanel: {fileID: 558227820}
+  bigSizeFilter: {x: 20, y: 20, z: 20}
+  fadeTime: 2
+  pausePanel: {fileID: 1697478223}
   invincibleTime: 0
   slashArea: {fileID: 0}
   velocityIncreaseValue: 0
@@ -1320,6 +1324,81 @@ MonoBehaviour:
   originSprite: {fileID: 21300000, guid: c12df8994ac5681459b9f822c899ac7e, type: 3}
   transitionSprite: {fileID: 21300000, guid: 525acbcff219b0241b29edd9528247de, type: 3}
   image: {fileID: 529178498}
+--- !u!1 &558227820
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 558227821}
+  - component: {fileID: 558227823}
+  - component: {fileID: 558227822}
+  m_Layer: 5
+  m_Name: FilterPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &558227821
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558227820}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1022666126}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &558227822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558227820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: c24580e23b82d7e4ca1ac3263eeb1d97, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &558227823
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558227820}
+  m_CullTransparentMesh: 1
 --- !u!1 &559568927
 GameObject:
   m_ObjectHideFlags: 0
@@ -1642,9 +1721,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  enemySpawner: {fileID: 0}
   _lowSanValue: 0
   mainCamera: {fileID: 0}
   escapeTime: 240
+  timer: 0
   parryStopDuration: 0.2
 --- !u!1 &658231023
 GameObject:
@@ -2705,7 +2786,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 558227821}
   m_Father: {fileID: 1023039582}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4650,7 +4732,7 @@ RectTransform:
   m_GameObject: {fileID: 1759358983}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.79375, y: 0.79375, z: 0.79375}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1537248154}
@@ -4658,7 +4740,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -100, y: -100}
+  m_AnchoredPosition: {x: -79.375, y: -105.16}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1759358985
@@ -5961,6 +6043,8 @@ MonoBehaviour:
   sanValue: {fileID: 2099841594}
   pausePanel: {fileID: 1697478223}
   overPanel: {fileID: 1597070755}
+  canUseMask: {fileID: 21300000, guid: 88d28dd3c2aae984188e0f9430b96ce0, type: 3}
+  cannotUseMask: {fileID: 21300000, guid: d813ece22cdb65d4fa76635006c5d09f, type: 3}
 --- !u!1 &2099841592
 GameObject:
   m_ObjectHideFlags: 0

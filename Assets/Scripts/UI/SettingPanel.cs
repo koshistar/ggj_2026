@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using SKCell;
@@ -12,6 +13,8 @@ public class SettingPanel : SKMonoSingleton<SettingPanel>
     [SerializeField] private CustomSlider sfxVolume;
     [SerializeField] private SKButton backButton;
     
+    [Header("Panels")]
+    [SerializeField] private GameObject maskPanel;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,12 +32,17 @@ public class SettingPanel : SKMonoSingleton<SettingPanel>
         AudioSystem.Instance.SetSfxVolume(sfxVolume.GetValue());
     }
 
+    private void OnDisable()
+    {
+        maskPanel.SetActive(false);
+        UIManager.Instance.SetPanel(null);
+    }
+
     #region ButtonEvents
 
     void Back()
     {
         gameObject.SetActive(false);
-        UIManager.Instance.SetPanel(null);
     }
 
     #endregion
