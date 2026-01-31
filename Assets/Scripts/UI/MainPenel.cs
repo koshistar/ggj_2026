@@ -15,7 +15,6 @@ public class MainPenel : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject overPanel;
     // Start is called before the first frame update
-    public float countdown = GameManager.Instance.escapeTime;
     void Start()
     {
         pauseButton.AddListener(SKButtonEventType.OnPressed, Pause);
@@ -24,10 +23,10 @@ public class MainPenel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (countdown > 0f)
+        if ( GameManager.Instance.escapeTime > 0f)
         {
-            countdown -= Time.deltaTime;
-            countdownText.SetText(countdown.ToString());
+            GameManager.Instance.escapeTime -= Time.deltaTime;
+            countdownText.SetText(GameManager.Instance.escapeTime.ToString());
         }
         else
         {

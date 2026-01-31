@@ -6,6 +6,8 @@ public class AudioSystem : PersistentSingleton<AudioSystem>
 {
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource sfxSource;
+    
+    public AudioClip[] music;
 
     // Start is called before the first frame update
     void Start()
